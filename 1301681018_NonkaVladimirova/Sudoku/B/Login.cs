@@ -11,20 +11,15 @@ using B.DataClass;
 namespace B
 {
     public partial class Login : Form
+        //main form
     {
         public Login()
         {
             InitializeComponent();
         }
-        public void GeneratorNewGame()
-        {
-            
-        }
 
         private void btLogin_Click(object sender, EventArgs e)
-        {
-            
-            
+        {                        
             AuthenticationService.AuthenticateUser(tbUsername.Text, tbPassword.Text);
 
             if (AuthenticationService.LoggedUser == null)
@@ -32,10 +27,9 @@ namespace B
                 tbUsername.BackColor = Color.IndianRed;
                 tbPassword.BackColor = Color.IndianRed;
             }
-
             else
             {               
-                this.Hide();                                //change
+                this.Hide();                                
                 Sudoku formSudoku = new Sudoku();
                 formSudoku.Show();
                 formSudoku.Activate();
@@ -45,7 +39,9 @@ namespace B
         private void btNewAccount_Click(object sender, EventArgs e)
         {
             this.Enabled = false;
+
             AddAccount addForm = new AddAccount();
+
             addForm.Owner = this;
             addForm.Show();
             addForm.Focus();

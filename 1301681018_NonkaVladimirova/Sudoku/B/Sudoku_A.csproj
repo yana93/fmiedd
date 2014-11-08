@@ -70,7 +70,7 @@
     <Compile Include="Sudoku.Designer.cs">
       <DependentUpon>Sudoku.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameArrays.cs" />
+    <Compile Include="АllМatrices.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

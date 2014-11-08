@@ -13,14 +13,17 @@ namespace B
     {       
         //Полета
         public List<Cell> cells = new List<Cell>();
-        public  GameArrays sectorArray = new GameArrays();
+        public  АllМatrices allMatrices = new АllМatrices();
         static char[] names = { 'A', 'B', 'C', 'D', 'F', 'G', 'H', 'I', 'J' };
-        static int indexSectorNameNext = 0;
+        static int indexSectorName = 0;
         
+        //Конструктор
+        //Създават се 9 инстанции на клетки пазаят се в пропъртито cells за всеки сектор
+
         public Sector()
             : base()
         {
-            sectorArray.AddArray();
+            allMatrices.AddArray();
                         
             Size = new Size(60, 60);
             
@@ -30,7 +33,7 @@ namespace B
             for (int i = 0; i < 9; i++)
             {
                 
-                cells.Add(new Cell(names[indexSectorNameNext], column, line));             
+                cells.Add(new Cell(names[indexSectorName], column, line));             
                 cells[i].Location = new Point(x, y);                
                 Controls.Add(cells[i]);
                 
@@ -40,11 +43,11 @@ namespace B
                 if (i == 2) { x = 0; y = 20; column = 0; line = 1; };
                 if (i == 5) { x = 0; y = 40; column = 0; line = 2; };
             }
-            indexSectorNameNext++;
+            indexSectorName++;
         }
 
-        //Метод който преобразува стойностите в низ като проверява да ли не са
-        //генерирани от генератора
+        //Метод който превръща стойностите на клетките от един сектор в низ
+        //като на тези които са генерирани добава 20 а на другите 10
 
         static public string ToDataField(Sector sector)
         {
@@ -65,6 +68,8 @@ namespace B
             }
             return set;
         }
+
+        //този метод е обратният на ToDataField
 
         public void GetOldGame(string dataField)
         {
@@ -91,10 +96,13 @@ namespace B
                    cell.Text = Convert.ToString(cell.CellValue);
                 }
                 subIndexStart = subIndexStart + 2;
-                int indexSector = GameArrays.SectorIndex(cell);
-                GameArrays.SetValueInArray(cell, indexSector);
+                int indexSector = АllМatrices.SectorIndex(cell);
+                АllМatrices.SetValueInArray(cell, indexSector);
             }
         }
+
+        //Преди да се генерира нова игра трябва всеки сектор 
+        //да се върне към първоначалните си настройки
 
         public static void ClearSector(Sector sector)
         {
@@ -105,8 +113,8 @@ namespace B
                 cell.Generated = false;
                 cell.Enabled = true;
 
-                int indexSector = GameArrays.SectorIndex(cell);
-                GameArrays.SetValueInArray(cell, indexSector);
+                int indexSector = АllМatrices.SectorIndex(cell);
+                АllМatrices.SetValueInArray(cell, indexSector);
             }
         }
         

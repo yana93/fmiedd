@@ -9,15 +9,18 @@ namespace B
     {
         //Този клас се дефинира в кода на формата. Има само една стасична
         //функция с име Random приемаща 1 параметър от клас Sector.
-        //Неговата функционалност е да генерира с готовия клас Random 
+        //Неговата функция е да генерира с готовия клас Random 
         //стойноста на случайна клетка от сектора и да провери със статичните 
-        //методи от класа GameArrays и методите на класа Cell
+        //методи от класа AllMatrices и методите на класа Cell
 
         static public void Random(Sector sector)
         {
             Random random = new Random();
 
-            int allNumbersInSector = 0;
+            //В секи сектор клетките който 
+            //ще се генерират имат различен брой
+
+            int allNumbersInSector = 0;         
 
             while (allNumbersInSector < 3)
             {
@@ -27,15 +30,14 @@ namespace B
                 Cell cellRandom = null;
                 cellRandom = sector.cells[cellIndex];
 
-                int sectorIndex = GameArrays.SectorIndex(cellRandom);
+                int sectorIndex = АllМatrices.SectorIndex(cellRandom);
 
                 cellRandom.CellValue = value;
 
-                if (Cell.GeneratorCheck(cellRandom))
-                {
+                if (Cell.GeneratorCheck(cellRandom))            //Генератора може няколко пъти да повтори една и съща клетка
+                {                                               //но със различна стойност заради това са изредени всички пропъртита
                     cellRandom.Enabled = false;
                     cellRandom.Generated = true;
-                    //cellRandom.ForeColor = Color.DarkSlateBlue;
                     cellRandom.Text = Convert.ToString(value);
                     allNumbersInSector++;
                 }
@@ -46,7 +48,7 @@ namespace B
                     allNumbersInSector=0;
                     cellRandom.Text = "";
                     cellRandom.CellValue = 0;
-                    GameArrays.SetValueInArray(cellRandom, sectorIndex);
+                    АllМatrices.SetValueInArray(cellRandom, sectorIndex);
                 }
             }
 

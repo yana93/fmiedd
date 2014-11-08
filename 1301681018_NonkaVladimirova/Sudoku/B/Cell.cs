@@ -20,7 +20,7 @@ namespace B
         protected bool generated;   //да ли стойноста на клетката е зададена от генератора
 
         //Конструктор с и без параметри
-        //Пропътита на класа
+        //Пропъртита на класа
 
         #region constructor and property
 
@@ -79,8 +79,8 @@ namespace B
 
         //Събития който са  override от TextBox
 
-        //При въвеждане на стойнот от клавиатурата трбва 
-        //да не прихващаме нищо друго освен цифри и backspace
+        //При въвеждане на стойнот от клавиатурата тярбва 
+        //да не се прихваща нищо друго освен цифри и backspace
 
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
@@ -102,11 +102,11 @@ namespace B
         //след това имаме проверка за повторение в сектора ако имаме фоновия
         //цвят става червен.
         //По същия начин и за съседните сектори
-        //Използваме методите от класа GameArrays
+        //Използваме методите от класа AllMatrices
 
         protected override void OnLeave(EventArgs e)
         {
-            base.OnLeave(e);                            //da mahna indexite ot metodite GameArrays
+            base.OnLeave(e);                            
             BackColor = Color.White;
             try
             {
@@ -115,18 +115,18 @@ namespace B
             catch (Exception )
             {
                 CellValue = 0;
-                GameArrays.SetValueInArray(this, GameArrays.SectorIndex(this));
+                АllМatrices.SetValueInArray(this, АllМatrices.SectorIndex(this));
                 return;
             }          
             
-            GameArrays gameArraysCheaks = new GameArrays();
+            АllМatrices gameArraysCheaks = new АllМatrices();
 
             if (!gameArraysCheaks.CheckSector(this))
             {                
                 BackColor = Color.Red;
             }
 
-            else if (!gameArraysCheaks.CneckAllArray(this))
+            else if (!gameArraysCheaks.CneckInAllMatrices(this))
             {
                 BackColor = Color.Red;
             }              
@@ -134,16 +134,16 @@ namespace B
 
         //Статичен метод който се използва от класа Generator 
         //Подобен е на кода в тялото на OnLeave но е статичен и
-        //връща true ili false
+        //връща true или false
 
         static public bool GeneratorCheck(Cell cell)
         {
-            GameArrays gameArraysCheaks = new GameArrays();
+            АllМatrices gameArraysCheaks = new АllМatrices();
             if (!gameArraysCheaks.CheckSector(cell))
             {
                 return false;
             }
-            else if (!gameArraysCheaks.CneckAllArray(cell))
+            else if (!gameArraysCheaks.CneckInAllMatrices(cell))
             {
                 return false;
             }
