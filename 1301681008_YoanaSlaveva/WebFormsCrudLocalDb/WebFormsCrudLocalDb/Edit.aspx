@@ -1,12 +1,13 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Create.aspx.cs" Inherits="WebFormsCrudLocalDb.Create" EnableEventValidation="false" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Edit.aspx.cs" Inherits="WebFormsCrudLocalDb.Edit" EnableEventValidation="false" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <br />
     <div class="container">
         <div class="row">
             <form role="form">
+               <asp:HiddenField ID="ID" runat="server" />
                 <div class="form-group">
                     <asp:Label ID="LabelUsername" runat="server" AssociatedControlID="TextBoxUsername" Text="Username"></asp:Label>
+                    
                     <asp:TextBox ID="TextBoxUsername" runat="server" CssClass="form-control"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxUsername" ErrorMessage="Field is required" CssClass="alert-danger"></asp:RequiredFieldValidator>
                 </div>
@@ -31,7 +32,7 @@
                     <asp:TextBox ID="TextConfirmPassword" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
 
-                <asp:Button ID="Add" runat="server" OnClick="Button1_Click" Text="Add" ValidateRequestMode="Disabled" />
+                <asp:Button ID="Update" runat="server" OnClick="UpdateUser" Text="Update" ValidateRequestMode="Disabled" />
 
             </form>
         </div>

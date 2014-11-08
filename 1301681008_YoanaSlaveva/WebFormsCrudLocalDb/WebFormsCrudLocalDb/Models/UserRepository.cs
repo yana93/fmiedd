@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -13,22 +14,11 @@ namespace WebFormsCrudLocalDb.Models
             conn = getConnectionString();
         }
 
-        public SqlConnection conn;
-
-        //public SqlConnection getConnectionString()
-        //{
-        //    // Change connection string to work correctly with database
-        //    //return new SqlConnection("Server=MimetoPc; Database=User; Integrated Security = true");
-
-        //    //return new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-        //    return new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=E:\aspnet-webforms-crud-clientes-master (1)\aspnet-webforms-crud-clientes-master\App_Data\TrabalhoBernardiContext-20130928225426.mdf;Integrated Security=True");
-        //}
-
+        public SqlConnection conn;       
         public SqlConnection getConnectionString()
         {
-            // Change connection string to work correctly with database
-            //return new SqlConnection("Server=MimetoPc; Database=User; Integrated Security = true");
-            return new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\Denis\Source\Repos\fmiedd\1301681008_YoanaSlaveva\WebFormsCrudLocalDb\WebFormsCrudLocalDb\App_Data\Crud.mdf;Integrated Security=True");
+            ConnectionStringSettings cm = ConfigurationManager.ConnectionStrings["DefaultConnection"];
+            return new SqlConnection(cm.ConnectionString);
         }
 
         public bool Insert(User user)
@@ -41,11 +31,11 @@ namespace WebFormsCrudLocalDb.Models
                     connection.Open();
                     using (SqlCommand command = connection.CreateCommand())
                     {
-                        command.CommandText = "INSERT INTO Users (username, password,email) VALUES (@param1,@param2,@param3)";
+                        command.CommandText = "INSERT INTO Users (username, password,email) VALUES (@username,@password,@email)";
 
-                        command.Parameters.AddWithValue("@param1", User.Username);
-                        command.Parameters.AddWithValue("@param2", User.Password);
-                        command.Parameters.AddWithValue("@param3", User.Email);
+                        command.Parameters.AddWithValue("@username", User.Username);
+                        command.Parameters.AddWithValue("@password", User.Password);
+                        command.Parameters.AddWithValue("@email", User.Email);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -118,7 +108,7 @@ namespace WebFormsCrudLocalDb.Models
             return user;
         }
 
-        public void Update(int id, string username, string password, string email)
+        public void Update(User user)
         {
             try
             {
@@ -129,10 +119,10 @@ namespace WebFormsCrudLocalDb.Models
                     using (SqlCommand command = connection.CreateCommand())
                     {
                         command.CommandText = "UPDATE Users SET username = @username, password = @pass, email = @email WHERE id = @id";
-                        command.Parameters.AddWithValue("@username", username);
-                        command.Parameters.AddWithValue("@pass", password);
-                        command.Parameters.AddWithValue("@email", email);
-                        command.Parameters.AddWithValue("@id", id);
+                        command.Parameters.AddWithValue("@username", user.Username);
+                        command.Parameters.AddWithValue("@pass", user.Password);
+                        command.Parameters.AddWithValue("@email", user.Email);
+                        command.Parameters.AddWithValue("@id", user.Id);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -142,7 +132,6 @@ namespace WebFormsCrudLocalDb.Models
             {
                 e.Message.ToString();
             }
-
         }
 
         public void Delete(int id)
