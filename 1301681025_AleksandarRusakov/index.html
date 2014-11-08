@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Space Invaders</title>
+        <link rel="stylesheet" type="text/css" href="css/core.css">
+        <link rel="stylesheet" type="text/css" href="css/typeography.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    </head>
+    <body>
+        <div id="info">
+            <p>Move with arrow keys, fire with the space bar. The invaders get faster and drop more bombs as you complete each level!</p>
+            <ul class="nav">
+                <li style="color: rgb(255, 0, 64); font-weight: bold;">Credit to Dave Kerr</li>
+                <li><a href="http://www.codeproject.com/Articles/642499/Learn-JavaScript-Part-1-Create-a-Starfield">Tutorial</a></li>
+                <li><a href="https://github.com/dwmkerr/spaceinvaders">Original game on Git</a></li>
+            </ul>
+        </div>
+
+        <script src="js/starfield.js"></script>
+        <script src="js/spaceinvaders.js"></script>
+        <script>
+
+            // Set up html elements
+            $('body').append('<div id="starfield"></div>',
+                            '<div id="gamecontainer"></div');
+            // Set up information
+            $('#gamecontainer').append('<canvas id="gameCanvas"></canvas>');
+            $('#info').append('<span><a id="muteLink" href="#" onclick="toggleMute()">Mute</a></span>');
+
+            //  Create the starfield.
+            var container = $('#starfield')[0];
+            var starfield = new Starfield();
+            starfield.initialise(container);
+            starfield.start();
+
+            //  Setup the canvas.
+            var canvas = $('#gameCanvas')[0];
+            canvas.width = 800;
+            canvas.height = 600;
+
+            //  Create the game.
+            var game = new Game();
+
+            //  Initialise it with the game canvas.
+            game.initialise(canvas);
+
+            //  Start the game.
+            game.start();
+
+            //  Listen for keyboard events.
+            window.addEventListener("keydown", function keydown(e) {
+                var keycode = e.which || window.event.keycode;
+                //  Supress further processing of left/right/space (37/29/32)
+                if(keycode == 37 || keycode == 39 || keycode == 32) {
+                    e.preventDefault();
+                }
+                game.keyDown(keycode);
+            });
+            window.addEventListener("keyup", function keydown(e) {
+                var keycode = e.which || window.event.keycode;
+                game.keyUp(keycode);
+            });
+
+            function toggleMute() {
+                game.mute();
+                $('#muteLink').text(game.sounds.mute ? "Unmute" : "Mute");
+            }
+        </script>
+    </body>
+</html>
