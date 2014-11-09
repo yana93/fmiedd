@@ -21,7 +21,7 @@ namespace danostane
         public Form1()
         {
             InitializeComponent();
-            cn.ConnectionString = @"Provider=SQLNCLI11;Data Source=PAVEL-PC\SQLEXPRESS;Integrated Security=SSPI;Initial Catalog=Users";
+            cn.ConnectionString = @"Provider=SQLNCLI11;Data Source=DANY-PC\SQLEXPRESS;Integrated Security=SSPI;Initial Catalog=Users";
             cmd.Connection = cn;
             
         }
