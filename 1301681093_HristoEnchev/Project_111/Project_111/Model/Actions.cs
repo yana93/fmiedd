@@ -55,8 +55,9 @@ namespace Project_111.Model
                     Console.WriteLine("Please select user");
                     Console.WriteLine("===============================================================================");
                     usrModel.FullInfo();
+                    Console.WriteLine("User ID: ");
+                    string test;
 
-                   
                     
 
 
