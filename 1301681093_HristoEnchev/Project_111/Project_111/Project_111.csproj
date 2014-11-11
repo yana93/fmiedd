@@ -41,12 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Model\Actions.cs" />
+    <Compile Include="Model\VIewA\AdminInfo.cs" />
+    <Compile Include="Model\VIewA\AdminView.cs" />
+    <Compile Include="Model\LogCheck.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserID.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\LoginScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
