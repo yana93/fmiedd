@@ -10,10 +10,6 @@ namespace Project_111
     {
         static void Main(string[] args)
         {
-            App start = new App();
-            start.FistPage();
-            start.Start();
-            Console.ReadKey();
         }
     }
 }
