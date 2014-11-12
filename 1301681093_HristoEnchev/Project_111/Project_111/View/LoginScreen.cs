@@ -13,8 +13,14 @@ namespace Project_111.View
         {
             string password = "";
 
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("I have tried to use MVC Pattern but i tooked me a long time for noting");
+            Console.WriteLine("So i used the old school methods for same results. Hope thats enought :/");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("==============================================================================");
             Console.WriteLine("Please enter UserName and Password (admin&admin), (user&user)");
             Console.WriteLine("==============================================================================");
+ 
             Console.BackgroundColor = ConsoleColor.DarkRed;
             Console.Write("Username: ");
             string username = Console.ReadLine();
