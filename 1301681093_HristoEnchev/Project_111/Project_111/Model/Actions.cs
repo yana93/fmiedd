@@ -9,7 +9,7 @@ namespace Project_111.Model
 {
     class Actions
     {
-        private AdminView aView = new AdminView();
+        private AdminInfo aView = new AdminInfo();
         public void uAction()
         {
             Console.Clear();
@@ -49,7 +49,16 @@ namespace Project_111.Model
                         string password = Console.ReadLine().ToString();
                         Console.Write("Email: ");
                         string Email = Console.ReadLine().ToString();
-                        command.CommandText = "insert into users(userName, userPassword, Email) values('" + username + "','" + password + "','" + Email + "')";
+                        if (username != "" && password != "")
+                        {
+                            command.CommandText = "insert into users(userName, userPassword, Email) values('" + username + "','" + password + "','" + Email + "')";
+
+                        }
+                        if (username == "" || password == "")
+                        {
+                            Console.WriteLine("Empty username or password");
+                            Console.ReadKey();
+                        }
 
                         Console.Clear();
                         if (username != null)
@@ -71,12 +80,20 @@ namespace Project_111.Model
                 }
                 if (cki.Key == ConsoleKey.D2)
                 {
+
                     Console.WriteLine(" - Selected");
                     Console.Write("ID: ");
                     int actionID = -1;
                     try
                     {
                         actionID = Convert.ToInt32(Console.ReadLine());
+                        if (actionID == 1 || actionID == 2)
+                        {
+                            Console.WriteLine("Can't edit admin", Console.ForegroundColor = ConsoleColor.Red);
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            Console.ReadKey();
+                            uAction();
+                        }
                     }
                     catch (Exception)
                     {
@@ -99,7 +116,7 @@ namespace Project_111.Model
                             user.Username = reader.GetString(1);
                             user.Password = reader.GetString(2);
                             user.Admin = reader.GetInt32(4);
-                            if (user.ID == actionID)
+                            if (user.ID == actionID )
                             {
                                 Console.Clear();
                                 Console.WriteLine("Here you can edit users");
@@ -137,11 +154,21 @@ namespace Project_111.Model
                                     {
                                         try
                                         {
-                                         OleDbCommand Command = new OleDbCommand("UPDATE users SET userName='" + newUserName + "' ,userPassword='" + newPassword + "' ,Email='" + newEmail +"' WHERE ID = @par1", connection);
-                                            Command.Parameters.AddRange(new[] { new OleDbParameter("@par1", actionID) });
-                                            Command.ExecuteNonQuery();
-                                            Console.Clear();
-                                            Console.WriteLine("Succssesfuly updated");
+                                            if (user.Username != newUserName)
+                                            {
+                                                OleDbCommand Command = new OleDbCommand("UPDATE users SET userName='" + newUserName + "' ,userPassword='" + newPassword + "' ,Email='" + newEmail + "' WHERE ID = @par1", connection);
+                                                Command.Parameters.AddRange(new[] { new OleDbParameter("@par1", actionID) });
+                                                Command.ExecuteNonQuery();
+                                                Console.Clear();
+                                                Console.WriteLine("Succssesfuly updated");
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("This Username already exist");
+                                                Console.ReadKey();
+                                                uAction();
+                                            }
+
                                         }
                                         catch (OleDbException e)
                                         {
@@ -172,6 +199,7 @@ namespace Project_111.Model
                     {
                         Console.WriteLine("Error: {0}", e.Errors[0].Message);
                     }
+
                 }
 
                 if (cki.Key == ConsoleKey.D3)
@@ -185,15 +213,15 @@ namespace Project_111.Model
                     Console.ForegroundColor = ConsoleColor.Gray;
                     aView.FullInfo();
                     User users = new User();
-                    Console.Write("ID: ");
+                    Console.WriteLine("Press Enter to continue or ESC to go back");
                     cki = Console.ReadKey();
-                    if (cki.Key != ConsoleKey.Escape)
+                    if (cki.Key == ConsoleKey.Enter)
                     {
+                        Console.Write("ID: ");
                         int actionID = -1;
                         try
                         {
                             actionID = Convert.ToInt32(Console.ReadLine());
-                            
                         }
                         catch (Exception)
                         {
@@ -204,9 +232,21 @@ namespace Project_111.Model
                         try
                         {
                             connection.Open();
+                            if (actionID == 1 || actionID == 2 )
+                            {
+                                Console.WriteLine("You can't delete admin",Console.ForegroundColor = ConsoleColor.Red);
+                                Console.ForegroundColor = ConsoleColor.Gray;
+                                Console.ReadKey();
+                                uAction();
+                                return;
 
-                            OleDbCommand aCommand = new OleDbCommand("DELETE FROM users WHERE ID = " + actionID, connection);
-                            aCommand.ExecuteNonQuery();
+                            }
+                            else
+                            {
+                                OleDbCommand aCommand = new OleDbCommand("DELETE FROM users WHERE ID = " + actionID, connection);
+                                aCommand.ExecuteNonQuery();
+                            }
+
                             connection.Close();
                         }
                         catch (OleDbException e)
@@ -219,6 +259,12 @@ namespace Project_111.Model
                     }
                     if (cki.Key == ConsoleKey.Escape)
                     {
+                        uAction();
+                    }
+                    else
+                    {
+                        Console.WriteLine(" - Wrong input");
+                        Console.ReadKey();
                         uAction();
                     }
                 }

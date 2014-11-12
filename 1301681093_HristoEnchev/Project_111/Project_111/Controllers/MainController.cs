@@ -28,7 +28,7 @@ namespace Project_111.Controllers
                     Console.WriteLine("Hello admin");
                     Console.ReadKey();
 
-                    AdminView info = new AdminView();
+                    AdminInfo info = new AdminInfo();
                     info.FullInfo();
                     Actions act = new Actions();
                     act.uAction();

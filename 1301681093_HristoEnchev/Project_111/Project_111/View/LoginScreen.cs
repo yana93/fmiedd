@@ -13,7 +13,7 @@ namespace Project_111.View
         {
             string password = "";
 
-            Console.WriteLine("Please enter UserName and Password (test&test)&(admin&admin)");
+            Console.WriteLine("Please enter UserName and Password (admin&admin), (user&user)");
             Console.WriteLine("==============================================================================");
             Console.BackgroundColor = ConsoleColor.DarkRed;
             Console.Write("Username: ");

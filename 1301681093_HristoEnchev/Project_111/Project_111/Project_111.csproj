@@ -44,7 +44,6 @@
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Model\Actions.cs" />
     <Compile Include="Model\VIewA\AdminInfo.cs" />
-    <Compile Include="Model\VIewA\AdminView.cs" />
     <Compile Include="Model\LogCheck.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserID.cs" />
