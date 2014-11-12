@@ -18,7 +18,6 @@ namespace Project_111.Model
                 connection.Open();
                 OleDbDataReader reader = command.ExecuteReader();
                 User user = new User();
-
                 while (reader.Read())
                 {
                     user.ID = reader.GetInt32(0);

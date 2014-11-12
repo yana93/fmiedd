@@ -11,7 +11,7 @@ namespace Project_111.View
     {
         public void LogScreen()
         {
-            // string password = "";
+            string password = "";
 
             Console.WriteLine("Please enter UserName and Password (test&test)&(admin&admin)");
             Console.WriteLine("==============================================================================");
@@ -21,7 +21,6 @@ namespace Project_111.View
 
             ConsoleKeyInfo cki;
             Console.Write("Password: ");
-            /*
             do
             {
                 cki = Console.ReadKey(true);
@@ -40,8 +39,8 @@ namespace Project_111.View
                 }
             }
             while (cki.Key != ConsoleKey.Enter);
-             */
-            string password = Console.ReadLine();
+          //  password = Console.ReadLine();
+            Console.WriteLine();
             Console.BackgroundColor = ConsoleColor.Black;
             MainController.Check(username, password);
         }

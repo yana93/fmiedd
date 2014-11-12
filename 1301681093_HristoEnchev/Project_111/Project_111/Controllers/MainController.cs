@@ -11,6 +11,7 @@ namespace Project_111.Controllers
 {
     public static class MainController
     {
+        
         public static User logUser { get; private set; }
         public static void Check(string username, string password)
         {
@@ -22,6 +23,8 @@ namespace Project_111.Controllers
             {
                 if (logUser.Admin == 1)
                 {
+                    
+                    
                     Console.WriteLine("Hello admin");
                     Console.ReadKey();
 
@@ -33,7 +36,10 @@ namespace Project_111.Controllers
                 if (logUser.Admin == 0)
                 {
                     Console.Clear();
-                    Console.WriteLine("Hello {0}", logUser.Username);                  
+                    Console.WriteLine("Hello {0}", logUser.Username);
+                    Console.WriteLine("I have no idea what to put here");
+                    Console.ReadKey();
+                   
                 }
             }
 
