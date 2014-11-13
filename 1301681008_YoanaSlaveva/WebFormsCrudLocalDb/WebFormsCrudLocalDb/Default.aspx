@@ -25,6 +25,9 @@
               
             </EmptyDataTemplate>
             <LayoutTemplate>
+                <div class="page-header">
+                    <h1>All Users</h1>
+                </div>
                 <table class="table table-hover">
                     <thead>
                         <tr>
