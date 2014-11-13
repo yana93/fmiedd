@@ -14,11 +14,11 @@ namespace EDD
 
         static void Main(string[] args)
         {
-            //hacking program lol
             Console.Title = "User Administration";
             Console.SetBufferSize(140, 90);
             Console.SetWindowSize(140, 35);
             myConnection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=..\\..\\data\\MyDB.accdb");
+            //hacking program begins lol
             Menu();
         }
 
@@ -31,7 +31,8 @@ namespace EDD
                 Console.WriteLine("1. Show all users\n");
                 Console.WriteLine("2. Add user");
                 Console.WriteLine("3. Edit user");
-                Console.WriteLine("4. Delete user\n");
+                Console.WriteLine("4. BAN/UNBAN user");
+                Console.WriteLine("5. Delete user\n");       
                 Console.WriteLine("0. Exit application\n\n");
 
                 Console.Write("Input: ");
@@ -46,13 +47,16 @@ namespace EDD
                         Menu();
                         break;
                     case 2:
-                        AddUser();
+                        AddUserMenu();
                         break;
                     case 3:
-                        EditUser();
+                        EditUserMenu();
                         break;
                     case 4:
-                        DeleteUser();
+                        BanUserMenu();
+                        break;
+                    case 5:
+                        DeleteUserMenu();
                         break;
                     case 0:
                         Environment.Exit(0);
@@ -76,10 +80,10 @@ namespace EDD
                 Console.WriteLine(appHeader);
 
                 myConnection.Open();
-                OleDbCommand myCommand = new OleDbCommand("SELECT * FROM RegisteredUsers", myConnection);
-                OleDbCommand myTotalEntries = new OleDbCommand("SELECT COUNT(*) FROM RegisteredUsers", myConnection);
+                OleDbCommand myCommand = new OleDbCommand("SELECT * FROM RegisteredUsers", myConnection);      //показжането на всички потребители
+                OleDbCommand myTotalEntries = new OleDbCommand("SELECT COUNT(*) FROM RegisteredUsers", myConnection);  //общо регистрирани
                 OleDbDataReader myReader = myCommand.ExecuteReader();
-                Console.WriteLine("All users ({0} total):\n\nID |     Username      |      Password     |           Email             |         Realname           | Birthday |Reg. date |Active|Banned\n", myTotalEntries.ExecuteScalar());
+                Console.WriteLine("All users ({0} total):\n\nID |     Username      |      Password     |           Email             |         Realname           | Birthday |Reg.date|Confirmed|Banned\n", myTotalEntries.ExecuteScalar());
                 int i = Console.CursorTop;
                 while (myReader.Read())
                 {
@@ -98,11 +102,20 @@ namespace EDD
                     Console.SetCursorPosition(114, i);
                     Console.WriteLine(myReader.GetDateTime(6).ToString("yyyy-MM-dd"));    //regdate
                     Console.SetCursorPosition(126, i);
-                    Console.WriteLine(myReader.GetBoolean(7));              // acttivatedd
-                    Console.SetCursorPosition(132, i);
-                    Console.WriteLine(myReader.GetBoolean(8));              // banned
+                    if (myReader.GetBoolean(7) == true)                      // activated 
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Yes");
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                    }                                               
+                    Console.SetCursorPosition(133, i);
+                    if (myReader.GetBoolean(8) == true)                      // banned
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Yes");
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                    }          
                     i++;
-
                 }
                 myReader.Close();
                 myConnection.Close();
@@ -114,7 +127,7 @@ namespace EDD
             }
         }
 
-        static void AddUser()
+        static void AddUserMenu()
         {
             try
             {
@@ -180,14 +193,14 @@ namespace EDD
             }
         }
 
-        static void EditUser()
+        static void EditUserMenu()
         {
             try
             {
                 ReadAllUsers();
 
                 // target id
-                Console.Write("\nSelect ID you want to change ('0' - back to menu): ");
+                Console.Write("\n\nSelect ID you want to change ('0' - back to menu): ");
                 int id = int.Parse(Console.ReadLine());
                 if (id != 0)
                 {
@@ -196,7 +209,7 @@ namespace EDD
                     OleDbCommand myCommandSelectID = new OleDbCommand("SELECT * FROM RegisteredUsers WHERE ID=@id", myConnection);
                     myCommandSelectID.Parameters.AddWithValue("@id", id);
                     OleDbDataReader myReader = myCommandSelectID.ExecuteReader();
-                    while (myReader.Read()) Console.WriteLine("\nID: {0}\n1) username: {1}\n2) password: {2}\n3) email: {3}\n4) realname: {4}\n5) birthday: {5}\n6) active: {6}\n7) banned: {7}", myReader.GetInt32(0).ToString(), myReader.GetString(1), myReader.GetString(2), myReader.GetString(3), myReader.GetString(4), myReader.GetDateTime(6).ToString("yyyy-MM-dd"), myReader.GetBoolean(7), myReader.GetBoolean(8));
+                    while (myReader.Read()) Console.WriteLine("\nID: {0}\n1) username: {1}\n2) password: {2}\n3) email: {3}\n4) Realname: {4}\n5) birthday: {5}\n6) active: {6}", myReader.GetInt32(0).ToString(), myReader.GetString(1), myReader.GetString(2), myReader.GetString(3), myReader.GetString(4), myReader.GetDateTime(6).ToString("yyyy-MM-dd"), myReader.GetBoolean(7));
                     myReader.Close();
                     myConnection.Close();
 
@@ -252,7 +265,7 @@ namespace EDD
                         }
                         else if (choice == 0)
                         {
-                            EditUser();
+                            EditUserMenu();
                             Console.ReadKey();
                         }
                     } while (choice != 0);
@@ -268,38 +281,35 @@ namespace EDD
 
         static void EditUserCommand(string type, string newValue, int id)
         {
+            string actionTypeString = "";  //tuk se suhranqva imeto na deistvieto 
+
             //Console.WriteLine("\nentered values: {0}={1} / id={2}\n", type, newValue, id);
             try
-            {
+            {           
                 myConnection.Open();
                 if (type == "password")  //                     V  different types - different queries  V
                 {
+                    actionTypeString = "changed user password!";
                     OleDbCommand myCommand = new OleDbCommand("UPDATE RegisteredUsers SET `password`='" + newValue + "' WHERE ID=" + id + "", myConnection);
                     myCommand.ExecuteNonQuery();
                     myConnection.Close();
                 }
-                else if (type == "activated")
+                else if (type == "activated" || type == "banned")
                 {
-                    OleDbCommand myCommand = new OleDbCommand("UPDATE RegisteredUsers SET " + type + "=" + newValue + " WHERE ID=" + id + "", myConnection);
-                    myCommand.ExecuteNonQuery();
-                    myConnection.Close();
-                }
-
-                else if (type == "banned")
-                {
+                    actionTypeString = " changed value";
                     OleDbCommand myCommand = new OleDbCommand("UPDATE RegisteredUsers SET " + type + "=" + newValue + " WHERE ID=" + id + "", myConnection);
                     myCommand.ExecuteNonQuery();
                     myConnection.Close();
                 }
                 else
                 {
+                    actionTypeString = "edited user info!";
                     OleDbCommand myCommand = new OleDbCommand("UPDATE RegisteredUsers SET " + type + "='" + newValue + "' WHERE ID=" + id + "", myConnection);
                     myCommand.ExecuteNonQuery();
                     myConnection.Close();
                 }
-
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\nSuccesfully edited user!");
+                Console.WriteLine("\nSuccesfully {0}", actionTypeString);
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
             catch (OleDbException e)
@@ -309,7 +319,92 @@ namespace EDD
             }
         }
 
-        static void DeleteUser()
+        static void BanUserMenu()
+        {
+            try
+            {
+                bool isBanned = false;
+
+                ReadAllUsers();
+
+                // target id
+                Console.Write("\nSelect ID you want to BAN/UNBAN ('0' back to menu): ");
+                int id = int.Parse(Console.ReadLine());
+                if (id != 0)
+                {
+                    // check if banned and shows some basic info
+                    myConnection.Open();
+                    OleDbCommand myCommandSelectID = new OleDbCommand("SELECT * FROM RegisteredUsers WHERE ID=@id", myConnection);
+                    myCommandSelectID.Parameters.AddWithValue("@id", id);
+                    OleDbDataReader myReader = myCommandSelectID.ExecuteReader();
+                    while (myReader.Read())
+                    {
+                        if(myReader.GetBoolean(8) == true)
+                        {
+                            isBanned = true;
+                        }
+                        else
+                        {
+                            isBanned = false;
+                        }
+                        Console.Write("\nid: {0} usrname: {1} \n\n ", myReader.GetInt32(0).ToString(), myReader.GetString(1));
+                    }
+                    myReader.Close();
+                    myConnection.Close();
+
+
+                    if(isBanned == true)
+                    {
+                        Console.Write("Do you want to UNBAN this user? (y/n) ");
+                        string choice = Console.ReadLine();
+                        do
+                        {
+                            if(choice == "y")
+                            {
+                                EditUserCommand("banned", "false", id);
+                                Console.ReadLine();
+                                BanUserMenu();
+                            } 
+                            else if(choice == "n")
+                            {
+                                Console.WriteLine("\nYour choice was 'NO'. Press any key to continue ...");
+                                Console.ReadLine();
+                                BanUserMenu();
+                            }
+                        } while (choice == "");
+                    }
+                    else if(isBanned == false)
+                    {
+                        Console.Write("Do you want to BAN this user? (y/n) ");
+                        string choice = Console.ReadLine();
+                        do
+                        {
+                            if (choice == "y")
+                            {
+                                EditUserCommand("banned", "true", id);
+                                Console.WriteLine("");
+                                Console.ReadKey();
+                                BanUserMenu();
+                            }
+                            else if (choice == "n")
+                            {
+                                Console.WriteLine("\nYour choice was 'NO'. Press any key to continue ...");
+                                Console.ReadLine();
+                                BanUserMenu();
+                            }
+                        } while (choice == "");
+                    }
+                }
+                else { Menu(); }
+            }
+            catch (Exception e)
+            {
+                myConnection.Close();
+                ErrorDisplay(e.StackTrace);
+            }
+        }
+
+        static void DeleteUserMenu()
         {
             try
             {
