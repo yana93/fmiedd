@@ -53,7 +53,7 @@ namespace WebApplicationCRUDApp
 
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "UPDATE Users SET Password=@Password, Email=@Email where @ID = ID";
+                cmd.CommandText = @"UPDATE Users SET Password=@Password, Email=@Email where @ID = ID";
                 cmd.Parameters.AddWithValue("@ID", TxtID.Text);
                 cmd.Parameters.AddWithValue("@Password", TxtPass.Text);
                 cmd.Parameters.AddWithValue("@Email", TxtEmail.Text);
@@ -67,17 +67,9 @@ namespace WebApplicationCRUDApp
             {
                 connection.Close();
             }
-            if (Page.IsValid)
-            {
-                LblState.ForeColor = System.Drawing.Color.Green;
-                LblState.Text = "Successfully completed";
+          
                 Response.Redirect("~/CRUD.aspx");
             }
-            else
-            {
-                LblState.ForeColor = System.Drawing.Color.Red;
-                LblState.Text = "Validation Error!";
-            }  
         }
       }
-    }
+    

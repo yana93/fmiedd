@@ -58,6 +58,15 @@ namespace WebApplicationCRUDApp {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorAddedName;
         
         /// <summary>
+        /// RegularExpressionValidatorName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidatorName;
+        
+        /// <summary>
         /// LblPass control.
         /// </summary>
         /// <remarks>
@@ -85,6 +94,15 @@ namespace WebApplicationCRUDApp {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorAddedPass;
         
         /// <summary>
+        /// RegularExpressionValidatorPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidatorPassword;
+        
+        /// <summary>
         /// LblEmail control.
         /// </summary>
         /// <remarks>
@@ -110,6 +128,15 @@ namespace WebApplicationCRUDApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorEmail;
+        
+        /// <summary>
+        /// RegularExpressionValidatorEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidatorEmail;
         
         /// <summary>
         /// BtnSave control.

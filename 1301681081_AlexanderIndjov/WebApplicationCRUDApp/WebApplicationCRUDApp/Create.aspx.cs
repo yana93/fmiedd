@@ -15,13 +15,16 @@ namespace WebApplicationCRUDApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //string str = WebConfigurationManager.ConnectionStrings["UsersConnectionString"].ConnectionString;
+            
         }
         protected void AddNewUser_Click(object sender, ImageClickEventArgs e)
         {
             RequiredFieldValidatorAddedName.Visible = true;
             RequiredFieldValidatorAddedPass.Visible = true;
+            RegularExpressionValidatorPassword.Visible = true;
             RequiredFieldValidatorEmail.Visible = true;
+            RegularExpressionValidatorEmail.Visible = true;
+            RegularExpressionValidatorName.Visible = true;
             LblPass.Visible = true;
             LblEmail.Visible = true;
             LblUser.Visible = true;
@@ -39,12 +42,13 @@ namespace WebApplicationCRUDApp
             try
             {
                 connection = new SqlConnection(str);
-                connection.Open();
                 SqlCommand cmd = new SqlCommand();
+                connection.Open();
+                
 
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "INSERT INTO Users Values (@Username, @Password, @Email)";
+                cmd.CommandText = @"INSERT INTO Users Values (@Username, @Password, @Email)";
                 cmd.Parameters.AddWithValue("@Username", TextBox1.Text);
                 cmd.Parameters.AddWithValue("@Password", TextBox2.Text);
                 cmd.Parameters.AddWithValue("@Email", TextBox3.Text);
