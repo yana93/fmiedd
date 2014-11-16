@@ -1,0 +1,21 @@
+﻿html{
+    background-color:silver;
+}
+body {
+}
+.Style{
+    margin-left:40%;
+    position:relative;
+    top: 4px;
+    left: -13px;
+    height: 150px;
+    width: 630px;
+}
+.Labels{
+  margin-right:25%;
+  top:38px;
+  left:256px;
+  padding:20px;
+  position:absolute;
+    height: 72px;
+}
