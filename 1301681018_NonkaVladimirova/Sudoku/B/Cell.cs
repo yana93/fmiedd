@@ -115,11 +115,11 @@ namespace B
             catch (Exception )
             {
                 CellValue = 0;
-                АllМatrices.SetValueInArray(this, АllМatrices.SectorIndex(this));
+                AllMatrices.SetValueInArray(this, AllMatrices.SectorIndex(this));
                 return;
             }          
             
-            АllМatrices gameArraysCheaks = new АllМatrices();
+            AllMatrices gameArraysCheaks = new AllMatrices();
 
             if (!gameArraysCheaks.CheckSector(this))
             {                
@@ -138,7 +138,7 @@ namespace B
 
         static public bool GeneratorCheck(Cell cell)
         {
-            АllМatrices gameArraysCheaks = new АllМatrices();
+            AllMatrices gameArraysCheaks = new AllMatrices();
             if (!gameArraysCheaks.CheckSector(cell))
             {
                 return false;

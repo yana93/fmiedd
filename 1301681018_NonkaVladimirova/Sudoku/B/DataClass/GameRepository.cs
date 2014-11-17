@@ -11,6 +11,7 @@ namespace B.DataClass
     class GameRepository
     {
         static private IDbConnection conn = null;
+        static private string connString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=sudokuDB.mdb;";
 
         public Game Select(int user_ID)
         {
@@ -19,7 +20,7 @@ namespace B.DataClass
             conn = new OleDbConnection();
             IDbCommand cmd = conn.CreateCommand();
             cmd.Connection = conn;
-            conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=sudokuDB.mdb;";
+            conn.ConnectionString = connString;
             cmd.CommandText = @"
 SELECT
   user_ID,
@@ -74,7 +75,7 @@ WHERE
             conn = new OleDbConnection();
             IDbCommand cmd = conn.CreateCommand();
             cmd.Connection = conn;
-            conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=sudokuDB.mdb;";                      
+            conn.ConnectionString = connString;                      
             cmd.CommandText = @"
 INSERT INTO Sudoku (
   user_ID,
@@ -155,7 +156,7 @@ VALUES (
         {
 
             conn = new OleDbConnection();
-            conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=sudokuDB.mdb;";
+            conn.ConnectionString = connString;
             IDbCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"
 UPDATE Sudoku SET
@@ -241,7 +242,7 @@ WHERE
         public void Delete(int user_ID)
         {
             conn=new OleDbConnection();
-            conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=sudokuDB.mdb;";
+            conn.ConnectionString = connString;
             IDbCommand cmd =conn.CreateCommand();
             cmd.CommandText = @"
 DELETE FROM sudoku

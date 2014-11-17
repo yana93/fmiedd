@@ -9,15 +9,16 @@ namespace B.DataClass
 {
     class UserRepository
     {
-        static private readonly string dataString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=sudokuDB.mdb;";
-        
+        //static private readonly string dataString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=sudokuDB.mdb;";
+        static private string connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=..\\..\\sudokuDB.mdb;";
+
         static private IDbConnection conn = null;
         static public void AddUser(string username,string password)
         {
             conn = new OleDbConnection();
             IDbCommand cmd = conn.CreateCommand();
             cmd.Connection = conn;
-            conn.ConnectionString =dataString;
+            conn.ConnectionString =connString;
             cmd.CommandText = @"
 INSERT INTO users (
   username,
@@ -62,7 +63,7 @@ VALUES (
             conn = new OleDbConnection();
             IDbCommand cmd = conn.CreateCommand();
             cmd.Connection = conn;
-            conn.ConnectionString =dataString;
+            conn.ConnectionString = connString;
             cmd.CommandText = @"
 SELECT
   user_ID,
