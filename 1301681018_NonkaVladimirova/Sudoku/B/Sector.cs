@@ -13,7 +13,7 @@ namespace B
     {       
         //Полета
         public List<Cell> cells = new List<Cell>();
-        public  АllМatrices allMatrices = new АllМatrices();
+        public  AllMatrices allMatrices = new AllMatrices();
         static char[] names = { 'A', 'B', 'C', 'D', 'F', 'G', 'H', 'I', 'J' };
         static int indexSectorName = 0;
         
@@ -96,8 +96,8 @@ namespace B
                    cell.Text = Convert.ToString(cell.CellValue);
                 }
                 subIndexStart = subIndexStart + 2;
-                int indexSector = АllМatrices.SectorIndex(cell);
-                АllМatrices.SetValueInArray(cell, indexSector);
+                int indexSector = AllMatrices.SectorIndex(cell);
+                AllMatrices.SetValueInArray(cell, indexSector);
             }
         }
 
@@ -113,8 +113,8 @@ namespace B
                 cell.Generated = false;
                 cell.Enabled = true;
 
-                int indexSector = АllМatrices.SectorIndex(cell);
-                АllМatrices.SetValueInArray(cell, indexSector);
+                int indexSector = AllMatrices.SectorIndex(cell);
+                AllMatrices.SetValueInArray(cell, indexSector);
             }
         }
         

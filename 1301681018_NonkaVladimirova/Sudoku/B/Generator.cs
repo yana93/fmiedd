@@ -30,7 +30,7 @@ namespace B
                 Cell cellRandom = null;
                 cellRandom = sector.cells[cellIndex];
 
-                int sectorIndex = АllМatrices.SectorIndex(cellRandom);
+                int sectorIndex = AllMatrices.SectorIndex(cellRandom);
 
                 cellRandom.CellValue = value;
 
@@ -48,7 +48,7 @@ namespace B
                     allNumbersInSector=0;
                     cellRandom.Text = "";
                     cellRandom.CellValue = 0;
-                    АllМatrices.SetValueInArray(cellRandom, sectorIndex);
+                    AllMatrices.SetValueInArray(cellRandom, sectorIndex);
                 }
             }
 

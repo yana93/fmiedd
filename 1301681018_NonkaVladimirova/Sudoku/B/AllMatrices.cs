@@ -9,7 +9,7 @@ using System.Drawing;
 namespace B
 {
 
-    class АllМatrices
+    class AllMatrices
     {
         //В класа GameArrays се съдържат 9-те матрици на судокуто подредени в списък
         //Списъка е статичен за да може при всяка нова инстанция на класа Sector
