@@ -10,7 +10,7 @@ namespace B.DataClass
     class UserRepository
     {
         //static private readonly string dataString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=sudokuDB.mdb;";
-        static private string connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=..\\Debug\\sudokuDB.mdb;";
+        static private string connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=..\\..\\sudokuDB.mdb;";
 
         static private IDbConnection conn = null;
         static public void AddUser(string username,string password)

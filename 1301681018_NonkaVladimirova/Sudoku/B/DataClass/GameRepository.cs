@@ -11,7 +11,7 @@ namespace B.DataClass
     class GameRepository
     {
         static private IDbConnection conn = null;
-        static private string connString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=..\\Debug\\sudokuDB.mdb;";
+        static private string connString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=sudokuDB.mdb;";
 
         public Game Select(int user_ID)
         {
